@@ -1,0 +1,49 @@
+cabal-version:      3.0
+name:               schrodinger-solver
+version:            0.1.0.0
+synopsis:           Time-dependent Schrödinger equation solver for N charged particles
+description:
+  A Haskell library for solving the time-dependent Schrödinger equation
+  for systems of N particles with arbitrary masses, electrical charges,
+  evolving in time-dependent electromagnetic fields, including full
+  particle-particle Coulomb interactions.
+  
+  Features:
+  * Split-step Fourier method and Runge-Kutta 4th order integration
+  * Arbitrary N-particle systems with full Coulomb interactions
+  * Time-dependent electromagnetic field coupling
+  * Observable computation (kinetic/potential energy, probability)
+  * Example applications: atomic ionization, Coulomb explosion, etc.
+
+license:            MIT
+license-file:       LICENSE
+author:             Quantum Computing Group
+maintainer:         
+category:           Physics
+build-type:         Simple
+
+common warnings
+    ghc-options: -Wall -Wcompat -Wincomplete-record-updates -Wincomplete-uni-patterns -Wredundant-constraints -O2
+
+library
+    import:           warnings
+    exposed-modules:  Physics.Schrodinger
+                      Physics.Examples
+    build-depends:    base ^>=4.18,
+                      hmatrix >=0.20,
+                      hmatrix-gsl >=0.19,
+                      containers >=0.6,
+                      vector >=0.12,
+                      array >=0.5,
+                      transformers >=0.6
+    hs-source-dirs:   src
+    default-language: Haskell2010
+
+executable schrodinger-example
+    import:           warnings
+    main-is:          Main.hs
+    build-depends:    base ^>=4.18,
+                      schrodinger-solver,
+                      hmatrix >=0.20
+    hs-source-dirs:   app
+    default-language: Haskell2010
